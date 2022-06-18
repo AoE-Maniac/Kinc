@@ -68,6 +68,10 @@ namespace {
 		return (sample - 128) << 8;
 	}
 
+	s16 convert32to16(s32 sample) {
+		return sample >> 16;
+	}
+
 	void splitStereo8(u8* data, int size, s16* left, s16* right) {
 		for (int i = 0; i < size; ++i) {
 			left[i] = convert8to16(data[i * 2 + 0]);
@@ -79,6 +83,13 @@ namespace {
 		for (int i = 0; i < size; ++i) {
 			left[i] = data[i * 2 + 0];
 			right[i] = data[i * 2 + 1];
+		}
+	}
+
+	void splitStereo32(s32* data, int size, s16* left, s16* right) {
+		for (int i = 0; i < size; ++i) {
+			left[i] = convert32to16(data[i * 2 + 0]);
+			right[i] = convert32to16(data[i * 2 + 1]);
 		}
 	}
 
@@ -172,6 +183,12 @@ void Sound::load(Reader &file, const char *filename) {
 			left = new s16[size];
 			right = new s16[size];
 			splitStereo16((s16*)data, size, left, right);
+		}
+		else if (format.bitsPerSample == 32) {
+			size /= 8;
+			left = new s16[size];
+			right = new s16[size];
+			splitStereo32((s32*)data, size, left, right);
 		}
 		else {
 			assert(false);
