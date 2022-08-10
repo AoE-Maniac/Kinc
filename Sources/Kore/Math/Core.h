@@ -21,6 +21,7 @@ namespace Kore {
 	float acos(float value);
 	float atan(float value);
 	float atan2(float y, float x);
+	float ceil(float value);
 	float floor(float value);
 	float mod(float numer, float denom);
 	float exp(float exponent);

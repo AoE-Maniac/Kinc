@@ -16,6 +16,10 @@ float Kore::round(float value) {
 	return kinc_round(value);
 }
 
+float Kore::ceil(float value) {
+  return kinc_ceil(value);
+}
+
 float Kore::floor(float value) {
 	return kinc_floor(value);
 }
